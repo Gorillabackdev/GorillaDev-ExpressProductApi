@@ -1,6 +1,6 @@
-# Product CRUD API
+ # Product CRUD API
 
-A lightweight RESTful API built with Node.js and Express for managing products. This project demonstrates fundamental CRUD operations (Create, Read, Update, Delete) and includes a custom integration test runner built without external testing libraries.
+A Reliable RESTful API built with Node.js and Express for managing products. This project demonstrates fundamental CRUD operations (Create, Read, Update, Delete) and includes a custom integration test runner built without external testing libraries.
 
 ## Features
 
@@ -70,3 +70,4 @@ Each successful call to `GET /external/todos/1` saves a mapped copy of `https://
 
 ## License
 ISC
+

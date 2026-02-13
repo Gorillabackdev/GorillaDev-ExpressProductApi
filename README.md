@@ -7,7 +7,7 @@ A lightweight RESTful API built with Node.js and Express for managing products. 
 - **RESTful Architecture**: Standard HTTP methods for resource management.
 - **Express.js**: Fast, unopinionated web framework.
 - **Custom Test Runner**: Integration tests written using Node.js's native `http` module (no Axios/Jest required).
-- **In-Memory Storage**: Currently uses an in-memory array for simplicity (MongoDB dependencies included for future expansion).
+- **MongoDB Storage**: Products and external todo responses are persisted in MongoDB.
 
 ## Prerequisites
 
@@ -27,6 +27,9 @@ A lightweight RESTful API built with Node.js and Express for managing products. 
    ```bash
    npm install
    ```
+4. Create a `.env` file with:
+   ```env
+   store your secret keys add it to gitignore
 
 ## Usage
 
@@ -42,6 +45,8 @@ npm run dev
 ```
 The server will start on `http://localhost:3000`.
 
+Cloudinary is configured at startup using the environment variables above.
+
 ### 2. Run Tests
 This project includes a custom script to verify API functionality. **Ensure the server is running in a separate terminal window before running tests.**
 
@@ -55,9 +60,13 @@ node test_crud.js
 | :--- | :--- | :--- | :--- |
 | `GET` | `/products` | Get all products | No |
 | `GET` | `/products/:id` | Get a single product | No |
-| `POST` | `/products` | Create a new product | `{ "name": "Item", "price": 10.0 }` |
+| `GET` | `/external/todos/1` | Fetch external todo, map it, save it, and return saved record | No |
+| `POST` | `/products` | Create a new product (uploads image to Cloudinary if provided) | `multipart/form-data` with `name`, `price`, optional `description`, optional file `image` |
 | `PUT` | `/products/:id` | Update a product | `{ "price": 15.0 }` |
 | `DELETE` | `/products/:id` | Delete a product | No |
+
+When `image` is sent in `POST /products`, the API uploads it to Cloudinary and saves the returned URL in `ImageUrl`.
+Each successful call to `GET /external/todos/1` saves a mapped copy of `https://jsonplaceholder.typicode.com/todos/1` in MongoDB and returns the saved document.
 
 ## License
 ISC
